@@ -1,8 +1,0 @@
-FastAPI
-uvicorn
-sqlalchemy
-pydantic
-databases
-asyncpg
-httpx
-python-dotenv
