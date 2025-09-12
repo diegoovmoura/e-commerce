@@ -22,6 +22,8 @@ class ProductOut(ProductCreate):
 
 class ProductUpdate(ProductBase):
     quantity: Optional[int] = None
+    stock: Optional[int] = None
+    price: Optional[float] = None
 
 class Product(ProductBase):
     id: int
