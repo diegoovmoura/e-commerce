@@ -7,8 +7,18 @@ class ProductBase(BaseModel):
     price: float
     quantity: int
 
-class ProductCreate(ProductBase):
-    pass
+class ProductCreate(BaseModel):
+    vendor_id: int
+    name: str
+    description: str
+    price: float
+    stock: int
+
+class ProductOut(ProductCreate):
+    id: int
+
+    class Config:
+        orm_mode = True
 
 class ProductUpdate(ProductBase):
     quantity: Optional[int] = None

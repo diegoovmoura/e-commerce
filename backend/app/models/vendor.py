@@ -3,14 +3,14 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-class Product(Base):
-    __tablename__ = 'products'
+class Vendor(Base):
+    __tablename__ = 'vendors'
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
-    description = Column(String)
-    price = Column(Float)
-    stock = Column(Integer)
+    contact_email = Column(String, unique=True, index=True)
+    phone_number = Column(String)
+    address = Column(String)
 
     def __repr__(self):
-        return f"<Product(name={self.name}, price={self.price}, stock={self.stock})>"
+        return f"<Vendor(name={self.name}, contact_email={self.contact_email})>"
