@@ -3,8 +3,8 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-class Vendor(Base):
-    __tablename__ = 'vendors'
+class Business(Base):
+    __tablename__ = 'businesses'
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
@@ -13,4 +13,4 @@ class Vendor(Base):
     address = Column(String)
 
     def __repr__(self):
-        return f"<Vendor(name={self.name}, contact_email={self.contact_email})>"
+        return f"<Business(name={self.name}, contact_email={self.contact_email})>"

@@ -8,7 +8,7 @@ class ProductBase(BaseModel):
     quantity: int
 
 class ProductCreate(BaseModel):
-    vendor_id: int
+    business_id: int
     name: str
     description: str
     price: float

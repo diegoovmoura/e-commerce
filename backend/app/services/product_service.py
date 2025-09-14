@@ -2,8 +2,12 @@ from sqlalchemy.orm import Session
 from app.models.product import Product
 from app.schemas.product_schema import ProductCreate, ProductUpdate
 import app.repositories.product_repository as product_repo
+from app.repositories.business_repository import get_by_id as get_business_by_id
 
 def create_product(db: Session, product: ProductCreate) -> Product:
+    business = get_business_by_id(db, product.business_id)
+    if not business:
+        raise ValueError("Business does not exist")
     if product.price <= 0:
         raise ValueError("Product price must be positive")
     if product.stock < 0:
