@@ -11,6 +11,3 @@ class Business(Base):
     contact_email = Column(String, unique=True, index=True)
     phone_number = Column(String)
     address = Column(String)
-
-    def __repr__(self):
-        return f"<Business(name={self.name}, contact_email={self.contact_email})>"

@@ -12,6 +12,3 @@ class Product(Base):
     description = Column(String)
     price = Column(Float)
     stock = Column(Integer)
-
-    def __repr__(self):
-        return f"<Product(name={self.name}, price={self.price}, stock={self.stock})>"
