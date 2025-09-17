@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends
-from app.models.product import Product
+from app.entities.product import Product
 from app.schemas.product_schema import ProductCreate, ProductOut
 from app.utils.db import get_db
 from sqlalchemy.orm import Session

@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.models.business import Business
+from app.entities.business import Business
 
 def create(db: Session, business: Business) -> Business:
     db.add(business)

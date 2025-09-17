@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
-from app.models.product import Product
+
+from app.entities.product import Product
 from app.schemas.product_schema import ProductCreate, ProductUpdate
 import app.repositories.product_repository as product_repo
 from app.repositories.business_repository import get_by_id as get_business_by_id

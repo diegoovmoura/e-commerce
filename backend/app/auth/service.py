@@ -5,6 +5,8 @@ from passlib.context import CryptContext
 from dotenv import load_dotenv
 import os
 
+from app.auth.utils import verify_password, create_access_token
+
 load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -14,9 +16,6 @@ ALGORITHM = os.getenv("ALGORITHM")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 30))
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
 
 def authenticate_user(db, username: str, password: str):
     user = db.get_user_by_username(username)
