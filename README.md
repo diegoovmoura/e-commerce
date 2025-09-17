@@ -1,66 +1,44 @@
 # E-commerce Platform
 
-This is a full-stack e-commerce platform built using FastAPI for the backend and Next.js for the frontend. 
+This repository contains a full-stack e-commerce application, with a FastAPI backend and (planned) Next.js frontend, following Clean Architecture principles.
 
 ## Project Structure
 
 ```
-ecommerce-platform
-├── backend
-│   ├── app
-│   │   ├── main.py          # Entry point for the FastAPI application
-│   │   ├── api
-│   │   │   └── routes.py    # API routes for product management
-│   │   ├── models
-│   │   │   └── product.py    # Product model definition
-│   │   ├── schemas
-│   │   │   └── product_schema.py # Pydantic schemas for product validation
-│   │   └── utils
-│   │       └── db.py        # Database utility functions
-│   ├── requirements.txt      # Backend dependencies
-│   └── README.md             # Documentation for the backend
-├── frontend
-│   ├── pages
-│   │   ├── index.tsx        # Homepage component
-│   │   └── products.tsx     # Products listing component
-│   ├── components
-│   │   └── ProductCard.tsx   # Product card component
-│   ├── public                # Static assets
-│   ├── package.json          # Frontend dependencies and scripts
-│   ├── tsconfig.json         # TypeScript configuration
-│   └── README.md             # Documentation for the frontend
-└── README.md                 # Overall project documentation
+ecommerce-platform/
+├── backend/                # FastAPI backend (see backend/README.md for details)
+│   ├── app/
+│   ├── requirements.txt
+│   └── README.md
+├── frontend/               # Next.js frontend (to be implemented)
+│   ├── pages/
+│   ├── components/
+│   └── package.json
+├── .env                    # Environment variables (not tracked by git)
+├── .gitignore
+└── README.md               # (This file)
 ```
 
-## Setup Instructions
+## Features
+
+- **Backend:** FastAPI, Clean Architecture, JWT authentication, product/vendor/cart/wishlist management.
+- **Frontend:** Next.js (planned), for a modern, responsive user interface.
+- **Extensible:** Easily add new features and modules by following the established structure.
+
+## Getting Started
 
 ### Backend
 
-1. Navigate to the `backend` directory.
-2. Install the required dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
-3. Run the FastAPI application:
-   ```
-   uvicorn app.main:app --reload
-   ```
+See [`backend/README.md`](backend/README.md) for detailed backend setup instructions.
 
 ### Frontend
 
-1. Navigate to the `frontend` directory.
-2. Install the required dependencies:
-   ```
-   npm install
-   ```
-3. Run the Next.js application:
-   ```
-   npm run dev
-   ```
+Frontend setup and instructions will be added soon.
 
-## Usage
+## Contributing
 
-- The backend API will be available at `http://localhost:8000`.
-- The frontend application will be available at `http://localhost:3000`.
+Contributions are welcome! Please open an issue or submit a pull request for improvements or bug fixes.
 
-This project is designed to be a starting point for building a more comprehensive e-commerce platform. You can extend the functionality by adding more features such as user authentication, payment processing, and more.
+---
+
+**This project is designed for scalability, maintainability, and professional development.**
