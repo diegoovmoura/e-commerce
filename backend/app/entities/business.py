@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
@@ -11,3 +12,5 @@ class Business(Base):
     contact_email = Column(String, unique=True, index=True)
     phone_number = Column(String)
     address = Column(String)
+
+    products = relationship("Product", back_populates="business")

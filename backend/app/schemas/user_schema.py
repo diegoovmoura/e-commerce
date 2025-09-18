@@ -1,18 +1,36 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, EmailStr
+from typing import Optional
+from datetime import datetime
 
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-    expires_in: int
+class UserBase(BaseModel):
+    username: str = Field(..., min_length=3, max_length=50, description="Username")
+    email: EmailStr = Field(..., description="User email address")
+    full_name: Optional[str] = Field(None, max_length=255, description="Full name")
 
-class UserCreate(BaseModel):
-    username: str
-    email: str
-    password: str
-    address: str | None = None
+class UserCreate(UserBase):
+    password: str = Field(..., min_length=6, description="User password")
 
 class UserUpdate(BaseModel):
-    username: str | None = None
-    email: str | None = None
-    password: str | None = None
-    address: str | None = None
+    username: Optional[str] = Field(None, min_length=3, max_length=50)
+    email: Optional[EmailStr] = None
+    full_name: Optional[str] = Field(None, max_length=255)
+    is_active: Optional[bool] = None
+
+class User(UserBase):
+    id: int
+    is_active: bool = True
+    created_at: datetime
+    updated_at: datetime
+    
+    class Config:
+        from_attributes = True
+
+class UserProfile(BaseModel):
+    id: int
+    username: str
+    email: EmailStr
+    full_name: Optional[str]
+    is_active: bool
+    
+    class Config:
+        from_attributes = True

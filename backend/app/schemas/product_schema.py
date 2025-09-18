@@ -1,31 +1,42 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional
+from datetime import datetime
+from decimal import Decimal
 
 class ProductBase(BaseModel):
-    name: str
-    description: str
-    price: float
-    quantity: int
+    name: str = Field(..., max_length=255, description="Product name")
+    description: str = Field(..., description="Product description")
+    price: Decimal = Field(..., gt=0, description="Product price")
+    stock: int = Field(..., ge=0, description="Available stock quantity")
+    business_id: int = Field(..., description="Business/Vendor ID")
 
-class ProductCreate(BaseModel):
-    business_id: int
-    name: str
-    description: str
-    price: float
-    stock: int
+class ProductCreate(ProductBase):
+    pass
 
-class ProductOut(ProductCreate):
-    id: int
-
-    class Config:
-        orm_mode = True
-
-class ProductUpdate(ProductBase):
-    quantity: Optional[int] = None
-    stock: Optional[int] = None
-    price: Optional[float] = None
+class ProductUpdate(BaseModel):
+    name: Optional[str] = Field(None, max_length=255)
+    description: Optional[str] = None
+    price: Optional[Decimal] = Field(None, gt=0)
+    stock: Optional[int] = Field(None, ge=0)
 
 class Product(ProductBase):
+    id: int
+    created_at: datetime
+    updated_at: datetime
+    
+    class Config:
+        from_attributes = True
+
+class ProductSummary(BaseModel):
+    id: int
+    name: str
+    price: Decimal
+    stock: int
+    
+    class Config:
+        from_attributes = True
+
+class ProductOut(ProductCreate):
     id: int
 
     class Config:
