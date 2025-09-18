@@ -1,34 +1,28 @@
+from typing import Optional, List
 from sqlalchemy.orm import Session
-from app.models.user import User
-from app.schemas.user_schema import UserCreate, UserUpdate
+from app.entities.user import User
+from app.repositories.base_repository import BaseRepository
 
-class UserRepository:
+class UserRepository(BaseRepository[User]):
     def __init__(self, db: Session):
-        self.db = db
-
-    def get_user_by_id(self, user_id: int):
-        return self.db.query(User).filter(User.id == user_id).first()
+        super().__init__(User, db)
     
-    def get_user_by_username(self, username: str):
-        return self.db.query(User).filter(User.username == username).first()
+    def get_by_username(self, username: str) -> Optional[User]:
+        return self.db.query(self.model).filter(self.model.username == username).first()
 
-    def get_user_by_email(self, email: str):
-        return self.db.query(User).filter(User.email == email).first()
+    def get_by_email(self, email: str) -> Optional[User]:
+        return self.db.query(self.model).filter(self.model.email == email).first()
+    
+    def exists_by_username(self, username: str) -> bool:
+        return self.db.query(self.model).filter(self.model.username == username).first() is not None
+    
+    def exists_by_email(self, email: str) -> bool:
+        return self.db.query(self.model).filter(self.model.email == email).first() is not None
+    
+    def get_active_users(self, skip: int = 0, limit: int = 100) -> List[User]:
+        return (self.db.query(self.model)
+                .filter(self.model.is_active == True)
+                .offset(skip)
+                .limit(limit)
+                .all())
 
-    def create_user(self, user_in: UserCreate):
-        user = User(**user_in.dict())
-        self.db.add(user)
-        self.db.commit()
-        self.db.refresh(user)
-        return user
-
-    def update_user(self, user: User, user_in: UserUpdate):
-        for field, value in user_in.dict(exclude_unset=True).items():
-            setattr(user, field, value)
-        self.db.commit()
-        self.db.refresh(user)
-        return user
-
-    def delete_user(self, user: User):
-        self.db.delete(user)
-        self.db.commit()

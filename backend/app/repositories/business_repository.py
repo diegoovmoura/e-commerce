@@ -1,23 +1,21 @@
+from typing import Optional, List
 from sqlalchemy.orm import Session
 from app.entities.business import Business
+from app.repositories.base_repository import BaseRepository
 
-def create(db: Session, business: Business) -> Business:
-    db.add(business)
-    db.commit()
-    db.refresh(business)
-    return business
-
-def get_by_id(db: Session, business_id: int) -> Business | None:
-    return db.query(Business).filter(Business.id == business_id).first()
-
-def get_all(db: Session) -> list[Business]:
-    return db.query(Business).all()
-
-def update(db: Session, business: Business) -> Business:
-    db.merge(business)
-    db.commit()
-    return business
-
-def delete(db: Session, business: Business) -> None:
-    db.delete(business)
-    db.commit()
+class BusinessRepository(BaseRepository[Business]):
+    def __init__(self, db: Session):
+        super().__init__(Business, db)
+    
+    def get_by_name(self, name: str) -> Optional[Business]:
+        return self.db.query(self.model).filter(self.model.name == name).first()
+    
+    def search_by_name(self, name: str, skip: int = 0, limit: int = 100) -> List[Business]:
+        return (self.db.query(self.model)
+                .filter(self.model.name.ilike(f"%{name}%"))
+                .offset(skip)
+                .limit(limit)
+                .all())
+    
+    def exists_by_name(self, name: str) -> bool:
+        return self.db.query(self.model).filter(self.model.name == name).first() is not None
