@@ -25,5 +25,3 @@ class ProductRepository(BaseRepository[Product]):
         return (self.db.query(self.model)
                 .filter(self.model.stock <= threshold)
                 .all())
-
-# Backward compatibility functions (to be deprecated)
