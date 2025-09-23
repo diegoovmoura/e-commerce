@@ -1,5 +1,7 @@
 from typing import Optional, List
 from sqlalchemy.orm import Session
+
+from app.schemas.user_schema import UserUpdate
 from app.entities.user import User
 from app.repositories.base_repository import BaseRepository
 
@@ -26,3 +28,16 @@ class UserRepository(BaseRepository[User]):
                 .limit(limit)
                 .all())
 
+    def update_current_user(self, user: User, update_data: UserUpdate):
+        for key, value in update_data.dict(exclude_unset=True).items():
+            setattr(user, key, value)
+        
+        self.db.commit()
+        self.db.refresh(user)
+        return user
+
+    def change_password(self, user: User, new_hashed_password: str) -> User:
+        user.hashed_password = new_hashed_password
+        self.db.commit()
+        self.db.refresh(user)
+        return user

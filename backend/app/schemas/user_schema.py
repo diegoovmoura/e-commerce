@@ -4,6 +4,7 @@ from datetime import datetime
 
 class UserBase(BaseModel):
     username: str = Field(..., min_length=3, max_length=50, description="Username")
+    password: str = Field(..., min_length=6, description="Password")
     email: EmailStr = Field(..., description="User email address")
     full_name: Optional[str] = Field(None, max_length=255, description="Full name")
 
@@ -15,6 +16,10 @@ class UserUpdate(BaseModel):
     email: Optional[EmailStr] = None
     full_name: Optional[str] = Field(None, max_length=255)
     is_active: Optional[bool] = None
+
+class PasswordChange(BaseModel):
+    old_password: str = Field(..., min_length=6, description="Old password")
+    new_password: str = Field(..., min_length=6, description="New password")
 
 class User(UserBase):
     id: int

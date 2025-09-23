@@ -2,15 +2,19 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
-
-from app.auth.service import authenticate_user, create_access_token
-from app.schemas.user_schema import Token
+from app.repositories.user_repository import update_current_user
+from app.services.user_service import create_user
+from app.auth.service import authenticate_user, create_access_token, get_current_active_user
+import app.schemas.user_schema as schema
 from app.utils.db import get_db
 
 router = APIRouter()
 
+@router.post("/register", response_model=schema.User)
+def register(user_data: schema.UserCreate, db: Session = Depends(get_db)):
+    return create_user(db, user_data)
 
-@router.post("/login", response_model=Token)
+@router.post("/login", response_model=schema.Token)
 def login(
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db),
@@ -24,3 +28,31 @@ def login(
     access_token = create_access_token(data={"sub": user.username})
     return {"access_token": access_token, "token_type": "bearer"}
 
+@router.get("/me", response_model=schema.UserProfile)
+def get_current_user_profile(current_user: str = Depends(authenticate_user)):
+    return current_user
+
+@router.post("/me", response_model=schema.UserUpdate)
+def update_current_user_profile(
+    user_update: schema.UserUpdate,
+    current_user: schema.User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    user = authenticate_user(db, current_user.username, current_user.password)
+    return update_current_user(user, user_update)
+
+@router.post("/change-password", response_model=schema.PasswordChange)
+def change_password(
+    password_change: schema.PasswordChange,
+    current_user: schema.User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    try:
+        from app.auth.service import change_password_service
+        change_password_service(db, current_user.id, password_change.old_password, password_change.new_password)
+        return {"message": "Password changed successfully"}
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
