@@ -1,11 +1,11 @@
-from pydantic import BaseModel, EmailStr, constr
-from typing import Optional
+from pydantic import BaseModel, EmailStr, Field
+from typing import Optional, Annotated
 
 class UserBase(BaseModel):
     email: EmailStr
 
 class UserCreate(UserBase):
-    password: constr(min_length=8)
+    password: Annotated[str, Field(min_length=8)]
     full_name: Optional[str] = None
 
 class UserLogin(BaseModel):

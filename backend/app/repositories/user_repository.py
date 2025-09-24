@@ -37,7 +37,7 @@ class UserRepository(BaseRepository[User]):
         return user
 
     def change_password(self, user: User, new_hashed_password: str) -> User:
-        user.hashed_password = new_hashed_password
+        setattr(user, 'hashed_password', new_hashed_password)
         self.db.commit()
         self.db.refresh(user)
         return user

@@ -9,6 +9,7 @@ class CartItemBase(BaseModel):
     price: Decimal = Field(..., gt=0, description="Price per unit")
 
 class CartItemCreate(CartItemBase):
+    quantity: int = Field(..., gt=0)
     pass
 
 class CartItemUpdate(BaseModel):

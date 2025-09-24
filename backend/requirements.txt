@@ -6,3 +6,7 @@ databases
 asyncpg
 httpx
 python-dotenv
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart
+pydantic[email]

@@ -23,7 +23,7 @@ def authenticate_user(db, username: str, password: str):
     user = user_repo.get_by_username(username)
     if not user:
         return None
-    if not verify_password(password, user.hashed_password):
+    if not verify_password(password, str(user.hashed_password)):
         return None
     return user
 
@@ -34,7 +34,7 @@ def change_password_service(db, user_id: int, old_password: str, new_password: s
     if not user:
         raise ValueError("User not found")
     
-    if not verify_password(old_password, user.hashed_password):
+    if not verify_password(old_password, str(user.hashed_password)):
         raise ValueError("Invalid current password")
     
     if len(new_password) < 6:
@@ -45,10 +45,3 @@ def change_password_service(db, user_id: int, old_password: str, new_password: s
     
     new_hashed_password = get_password_hash(new_password)
     return user_repo.change_password(user, new_hashed_password)
-
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
-    to_encode = data.copy()
-    expire = datetime.utcnow() + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, str(SECRET_KEY), algorithm=str(ALGORITHM))
-    return encoded_jwt

@@ -1,5 +1,18 @@
+# Virtual environment
 .env
 .venv
 .venv/
 venv/
+
+# Python cache
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+ecommerce.db
