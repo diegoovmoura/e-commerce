@@ -23,7 +23,7 @@ class CartItemRepository(BaseRepository[CartItem]):
     def update_quantity(self, cart_item_id: int, quantity: int) -> Optional[CartItem]:
         cart_item = self.get_by_id(cart_item_id)
         if cart_item:
-            cart_item.quantity = quantity
+            self.db.query(CartItem).filter(CartItem.id == cart_item_id).update({"quantity": quantity})
             self.db.commit()
             self.db.refresh(cart_item)
         return cart_item
