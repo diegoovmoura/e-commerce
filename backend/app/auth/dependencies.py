@@ -8,7 +8,7 @@ from app.schemas import user_schema
 from app.entities.user import User
 from app.repositories.user_repository import UserRepository
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
 
 def get_current_user(
     token: str = Depends(oauth2_scheme),
@@ -21,9 +21,12 @@ def get_current_user(
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
+    
     try:
         username = decode_access_token(token)
-    except Exception:
+        if not username:
+            raise credentials_exception
+    except JWTError:
         raise credentials_exception
     
     user_repo = UserRepository(db)

@@ -45,6 +45,14 @@ def custom_openapi():
         }
     }
     
+    # Add security to all protected endpoints
+    for path_data in openapi_schema["paths"].values():
+        for operation in path_data.values():
+            if isinstance(operation, dict) and "tags" in operation:
+                # Add security to business, cart, and other protected endpoints
+                if any(tag in ["business", "cart"] for tag in operation.get("tags", [])):
+                    operation["security"] = [{"BearerAuth": []}]
+    
     app.openapi_schema = openapi_schema
     return app.openapi_schema
 

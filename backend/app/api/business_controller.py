@@ -9,7 +9,7 @@ from app.auth.dependencies import get_current_active_user
 from app.entities.user import User
 from app.utils.db import get_db
 
-router = APIRouter(prefix="/businesses", tags=["businesses"])
+router = APIRouter(prefix="/businesses")
 
 @router.get("/", response_model=List[Business])
 def get_businesses(

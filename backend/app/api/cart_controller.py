@@ -13,7 +13,7 @@ from app.auth.dependencies import get_current_active_user
 from app.entities.user import User
 from app.utils.db import get_db
 
-router = APIRouter(prefix="/cart", tags=["cart"])
+router = APIRouter(prefix="/cart")
 
 @router.get("/", response_model=Cart)
 def get_my_cart(

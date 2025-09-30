@@ -14,7 +14,7 @@ from app.auth.dependencies import get_current_active_user
 from app.entities.user import User
 from app.utils.db import get_db
 
-router = APIRouter(prefix="/products", tags=["products"])
+router = APIRouter(prefix="/products")
 
 @router.get("/", response_model=List[Product])
 def get_products(
