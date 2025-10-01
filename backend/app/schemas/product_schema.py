@@ -9,6 +9,7 @@ class ProductBase(BaseModel):
     price: Decimal = Field(..., gt=0, description="Product price")
     stock: int = Field(..., ge=0, description="Available stock quantity")
     business_id: int = Field(..., description="Business/Vendor ID")
+    image_url: Optional[str] = Field(None, description="Product image URL")
 
 class ProductCreate(ProductBase):
     pass
@@ -18,6 +19,7 @@ class ProductUpdate(BaseModel):
     description: Optional[str] = None
     price: Optional[Decimal] = Field(None, gt=0)
     stock: Optional[int] = Field(None, ge=0)
+    image_url: Optional[str] = None
 
 class Product(ProductBase):
     id: int

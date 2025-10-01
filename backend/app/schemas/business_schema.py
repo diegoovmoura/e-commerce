@@ -4,18 +4,18 @@ from datetime import datetime
 
 class BusinessBase(BaseModel):
     name: str = Field(..., max_length=255, description="Business name")
-    description: Optional[str] = Field(None, description="Business description")
-    email: Optional[str] = Field(None, description="Business contact email")
-    phone: Optional[str] = Field(None, description="Business contact phone")
+    contact_email: Optional[str] = Field(None, description="Business contact email")
+    phone_number: Optional[str] = Field(None, description="Business contact phone")
+    address: Optional[str] = Field(None, description="Business address")
 
 class BusinessCreate(BusinessBase):
     pass
 
 class BusinessUpdate(BaseModel):
     name: Optional[str] = Field(None, max_length=255)
-    description: Optional[str] = None
-    email: Optional[str] = None
-    phone: Optional[str] = None
+    contact_email: Optional[str] = None
+    phone_number: Optional[str] = None
+    address: Optional[str] = None
 
 class Business(BusinessBase):
     id: int
