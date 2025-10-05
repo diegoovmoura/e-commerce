@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@layer base {
+  :root {
+    /* Your custom color palette as CSS variables */
+    --color-navy-900: #0d1321;
+    --color-navy-800: #1d2d44;
+    --color-blue-gray-700: #3e5c76;
+    --color-blue-gray-500: #748cab;
+    --color-cream-100: #f0ebd8;
+    
+    /* Semantic color variables */
+    --background: #f0ebd8;
+    --foreground: #0d1321;
+    --card: #ffffff;
+    --card-foreground: #1d2d44;
+    --popover: #ffffff;
+    --popover-foreground: #0d1321;
+    --primary: #3e5c76;
+    --primary-foreground: #f0ebd8;
+    --secondary: #748cab;
+    --secondary-foreground: #0d1321;
+    --muted: #3e5c76;
+    --muted-foreground: #748cab;
+    --accent: #748cab;
+    --accent-foreground: #0d1321;
+    --destructive: #dc2626;
+    --destructive-foreground: #ffffff;
+    --border: #3e5c76;
+    --input: #f0ebd8;
+    --ring: #748cab;
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-primary-50;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary-300 rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary-400;
+  }
+}
+
+@layer components {
+  /* Custom component classes using your color palette */
+  .btn-primary {
+    @apply bg-primary-600 text-primary-50 hover:bg-primary-700 focus:ring-primary-500 px-4 py-2 rounded-lg font-medium transition-colors duration-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-primary-500 text-primary-900 hover:bg-primary-400 focus:ring-primary-600 px-4 py-2 rounded-lg font-medium transition-colors duration-200;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-primary-50 px-4 py-2 rounded-lg font-medium transition-all duration-200;
+  }
+  
+  .card {
+    @apply bg-card text-card-foreground rounded-xl border border-primary-200 shadow-soft p-6;
+  }
+  
+  .input {
+    @apply bg-input border border-primary-300 rounded-lg px-3 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200;
+  }
+  
+  .label {
+    @apply text-sm font-medium text-foreground mb-2 block;
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-600 to-primary-500 bg-clip-text text-transparent;
+  }
+  
+  .glass {
+    @apply bg-white/80 backdrop-blur-sm border border-white/20;
+  }
+  
+  /* Navigation styles */
+  .nav-link {
+    @apply text-primary-700 hover:text-primary-800 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200;
+  }
+  
+  .nav-link-active {
+    @apply bg-primary-100 text-primary-900 px-3 py-2 rounded-md text-sm font-medium;
+  }
+  
+  /* Container styles */
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .container-narrow {
+    @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Typography enhancements */
+  .heading-1 {
+    @apply text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground tracking-tight;
+  }
+  
+  .heading-2 {
+    @apply text-3xl sm:text-4xl font-bold text-foreground tracking-tight;
+  }
+  
+  .heading-3 {
+    @apply text-2xl sm:text-3xl font-semibold text-foreground;
+  }
+  
+  .heading-4 {
+    @apply text-xl sm:text-2xl font-semibold text-foreground;
+  }
+  
+  .body-large {
+    @apply text-lg text-muted-foreground leading-relaxed;
+  }
+  
+  .body {
+    @apply text-base text-foreground leading-relaxed;
+  }
+  
+  .body-small {
+    @apply text-sm text-muted-foreground;
+  }
+}
